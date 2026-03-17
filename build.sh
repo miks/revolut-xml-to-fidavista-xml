@@ -54,6 +54,8 @@ cat > "bundle/${APP_NAME}.app/Contents/Info.plist" << 'EOF'
             <string>Viewer</string>
         </dict>
     </array>
+    <key>CFBundleIconFile</key>
+    <string>AppIcon</string>
     <key>NSPrincipalClass</key>
     <string>NSApplication</string>
     <key>NSHighResolutionCapable</key>
@@ -63,6 +65,9 @@ cat > "bundle/${APP_NAME}.app/Contents/Info.plist" << 'EOF'
 </dict>
 </plist>
 EOF
+
+echo "→ Copying icon..."
+cp AppIcon.icns "$RESOURCES_DIR/AppIcon.icns"
 
 echo "→ Clearing quarantine..."
 xattr -cr "bundle/${APP_NAME}.app" 2>/dev/null || true
