@@ -33,6 +33,16 @@ That's it. No Python, no dependencies, nothing to install.
 ./revolut2fidavista jan.csv feb.csv mar.csv
 ```
 
+## If macOS says the app is "damaged"
+
+This happens because the app isn't signed with an Apple certificate. Run this once in Terminal after copying the app:
+
+```bash
+xattr -cr /Applications/RevolutToFidavista.app
+```
+
+Then right-click → Open on first launch to get past the Gatekeeper prompt.
+
 ## Notes
 
 - Only `COMPLETED` transactions are included (pending/declined are skipped)
