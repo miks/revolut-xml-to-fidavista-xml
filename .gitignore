@@ -1,0 +1,7 @@
+# Rust
+/target/
+ 
+# macOS
+.DS_Store
+bundle/RevolutToFidavista.app/Contents/MacOS/revolut2fidavista
+ 
