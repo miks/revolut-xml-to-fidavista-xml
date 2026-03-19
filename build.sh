@@ -45,10 +45,10 @@ cat > "bundle/${APP_NAME}.app/Contents/Info.plist" << 'EOF'
     <array>
         <dict>
             <key>CFBundleTypeName</key>
-            <string>CSV File</string>
+            <string>XML File</string>
             <key>CFBundleTypeExtensions</key>
             <array>
-                <string>csv</string>
+                <string>xml</string>
             </array>
             <key>CFBundleTypeRole</key>
             <string>Viewer</string>
@@ -75,4 +75,4 @@ xattr -cr "bundle/${APP_NAME}.app" 2>/dev/null || true
 echo ""
 echo "✓ Done!  →  bundle/${APP_NAME}.app"
 echo ""
-echo "Usage: drag any Revolut CSV onto the app icon in Finder or Dock."
+echo "Usage: drag any Revolut XML onto the app icon in Finder or Dock."

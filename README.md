@@ -1,6 +1,6 @@
 # revolut2fidavista
 
-Converts Revolut CSV exports to FIDAVISTA XML format (used by Latvian banks).
+Converts Revolut **camt.053.001.12** (ISO 20022 Bank-to-Customer Statement) XML exports to FIDAVISTA XML format (used by Latvian banks).
 
 ## Build (on your Mac)
 
@@ -18,19 +18,20 @@ This produces `bundle/RevolutToFidavista.app`.
 ## For the accountant
 
 1. Copy `RevolutToFidavista.app` to `/Applications` (or anywhere)
-2. **Drag a Revolut CSV** onto the app icon
-3. The XML appears next to the CSV with the same name
+2. In Revolut Business, export a statement as XML (camt.053.001.12)
+3. **Drag the XML file** onto the app icon
+4. The FIDAVISTA XML appears next to the source file with a `.fidavista.xml` extension
 
 That's it. No Python, no dependencies, nothing to install.
 
 ## CLI usage (for power users)
 
 ```bash
-./revolut2fidavista transactions.csv
-# → produces transactions.xml in the same folder
+./revolut2fidavista statement.xml
+# → produces statement.fidavista.xml in the same folder
 
 # Multiple files at once:
-./revolut2fidavista jan.csv feb.csv mar.csv
+./revolut2fidavista jan.xml feb.xml mar.xml
 ```
 
 ## If macOS says the app is "damaged"
@@ -45,7 +46,6 @@ Then right-click → Open on first launch to get past the Gatekeeper prompt.
 
 ## Notes
 
-- Only `COMPLETED` transactions are included (pending/declined are skipped)
-- Client name & account number are left blank — fill them in manually or
-  add them as flags if you want to extend the tool
-- The XML uses UTF-8 encoding
+- Opening and closing balances are taken from the `OPBD`/`CLBD` balance entries in the source XML
+- Account IBAN is populated from the statement's account data
+- The output XML uses UTF-8 encoding

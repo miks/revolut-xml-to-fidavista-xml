@@ -12,8 +12,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         var hasError = false
 
         for filename in filenames {
-            guard filename.lowercased().hasSuffix(".csv") else {
-                results.append("⚠️ Skipped (not a CSV): \(filename)")
+            guard filename.lowercased().hasSuffix(".xml") else {
+                results.append("⚠️ Skipped (not an XML): \(filename)")
                 continue
             }
 
@@ -37,8 +37,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 ) ?? ""
 
                 if process.terminationStatus == 0 {
-                    let xmlPath = (filename as NSString).deletingPathExtension + ".xml"
-                    results.append("✓ \((xmlPath as NSString).lastPathComponent)")
+                    let outPath = (filename as NSString).deletingPathExtension + ".fidavista.xml"
+                    results.append("✓ \((outPath as NSString).lastPathComponent)")
                 } else {
                     results.append("✗ \((filename as NSString).lastPathComponent): \(output.trimmingCharacters(in: .whitespacesAndNewlines))")
                     hasError = true
