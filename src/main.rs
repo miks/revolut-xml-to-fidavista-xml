@@ -144,13 +144,17 @@ fn convert(xml_path: &Path) -> Result<PathBuf, String> {
 
         let rltd = tx_dtls.and_then(|td| child(td, "RltdPties"));
 
-        // Counterparty: prefer Dbtr (for credits), otherwise InitgPty (for debits)
+        // Counterparty: Dbtr for incoming transfers, Cdtr for outgoing transfers.
+        // Do NOT use InitgPty — in Revolut card transactions that field contains the
+        // card holder (account owner), not the merchant.
+        // For card payments where no Dbtr/Cdtr exists, fall back to pmt_info (merchant
+        // description), matching the behaviour of the old CSV-based converter.
         let counterparty_name = rltd
             .and_then(|r| {
                 descend_text(r, &["Dbtr", "Pty", "Nm"])
-                    .or_else(|| descend_text(r, &["InitgPty", "Pty", "Nm"]))
                     .or_else(|| descend_text(r, &["Cdtr", "Pty", "Nm"]))
             })
+            .or_else(|| if pmt_info.is_empty() { None } else { Some(pmt_info.clone()) })
             .unwrap_or_default();
 
         let counterparty_iban = rltd
